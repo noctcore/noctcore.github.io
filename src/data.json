@@ -10,13 +10,28 @@
       "statusNote": "Dependency and security updates and fixes to what exists, no new features.",
       "state": "maintenance",
       "facts": [
-        ["Latest", "v0.5.0, 2 October 2026"],
-        ["Get it", "Installers for macOS (.dmg) and Windows (.exe, .msi)"],
-        ["Built on", "Rust and Tauri, over a Bun provider sidecar"]
+        [
+          "Latest",
+          "v0.5.0, 2 October 2026"
+        ],
+        [
+          "Get it",
+          "Installers for macOS (.dmg) and Windows (.exe, .msi)"
+        ],
+        [
+          "Built on",
+          "Rust and Tauri, over a Bun provider sidecar"
+        ]
       ],
       "links": [
-        ["Download v0.5.0", "https://github.com/noctcore/nightcore/releases/latest"],
-        ["Repository", "https://github.com/noctcore/nightcore"]
+        [
+          "Download v0.5.0",
+          "https://github.com/noctcore/nightcore/releases/latest"
+        ],
+        [
+          "Repository",
+          "https://github.com/noctcore/nightcore"
+        ]
       ]
     },
     {
@@ -28,13 +43,28 @@
       "statusNote": "Projects and tasks work today; the worktree manager is planned for v0.4. No binary release yet.",
       "state": "active",
       "facts": [
-        ["Milestone", "v0.3, projects and tasks"],
-        ["Get it", "Build from source (Rust, Node 22.18+, pnpm 10)"],
-        ["Built on", "Tauri v2 and Rust, one binary that is both daemon and CLI"]
+        [
+          "Milestone",
+          "v0.3, projects and tasks"
+        ],
+        [
+          "Get it",
+          "Build from source (Rust, Node 22.18+, pnpm 10)"
+        ],
+        [
+          "Built on",
+          "Tauri v2 and Rust, one binary that is both daemon and CLI"
+        ]
       ],
       "links": [
-        ["Build from source", "https://github.com/noctcore/nysia#development"],
-        ["Repository", "https://github.com/noctcore/nysia"]
+        [
+          "Repository",
+          "https://github.com/noctcore/nysia"
+        ],
+        [
+          "Build from source",
+          "https://github.com/noctcore/nysia#development"
+        ]
       ]
     }
   ],
@@ -49,17 +79,46 @@
       "state": "preview",
       "install": "npm i @noctcore/auth @node-rs/argon2",
       "links": [
-        ["Docs", "https://noctcore.github.io/auth/"],
-        ["Repository", "https://github.com/noctcore/auth"],
-        ["Example app", "https://github.com/noctcore/auth/tree/main/examples/basic"]
+        [
+          "Docs",
+          "https://noctcore.github.io/auth/"
+        ],
+        [
+          "Repository",
+          "https://github.com/noctcore/auth"
+        ],
+        [
+          "Example app",
+          "https://github.com/noctcore/auth/tree/main/examples/basic"
+        ]
       ],
       "note": "All five packages share one version.",
       "packages": [
-        ["auth", "0.5.0", "The framework-free core: sessions, passwords, one-time tokens, throttling and flows, with two-factor, membership and invitations as subpaths."],
-        ["auth-redis", "0.5.0", "Session, counter, two-factor and membership stores on ioredis."],
-        ["auth-prisma", "0.5.0", "Prisma 7 user, token, two-factor and membership stores, plus the schema to merge."],
-        ["auth-nestjs", "0.5.0", "A closed-by-default session guard, CSRF middleware, decorators and trust-proxy setup."],
-        ["auth-trpc", "0.5.0", "Session context, guarded procedures, CSRF on mutations and safe error mapping."]
+        [
+          "auth",
+          "0.5.0",
+          "The framework-free core: sessions, passwords, one-time tokens, throttling and flows, with two-factor, membership and invitations as subpaths."
+        ],
+        [
+          "auth-redis",
+          "0.5.0",
+          "Session, counter, two-factor and membership stores on ioredis."
+        ],
+        [
+          "auth-prisma",
+          "0.5.0",
+          "Prisma 7 user, token, two-factor and membership stores, plus the schema to merge."
+        ],
+        [
+          "auth-nestjs",
+          "0.5.0",
+          "A closed-by-default session guard, CSRF middleware, decorators and trust-proxy setup."
+        ],
+        [
+          "auth-trpc",
+          "0.5.0",
+          "Session context, guarded procedures, CSRF on mutations and safe error mapping."
+        ]
       ]
     },
     {
@@ -72,12 +131,22 @@
       "state": "shipped",
       "install": "npx @noctcore/harness check",
       "links": [
-        ["Docs", "https://noctcore.github.io/harness/"],
-        ["Repository", "https://github.com/noctcore/harness"]
+        [
+          "Docs",
+          "https://noctcore.github.io/harness/"
+        ],
+        [
+          "Repository",
+          "https://github.com/noctcore/harness"
+        ]
       ],
       "note": "Subpaths: /rules and /pinned-tools.",
       "packages": [
-        ["harness", "0.6.0", "harness check runs the manifest, harness lint-meta the whole-repo rules, harness catalog documents them."]
+        [
+          "harness",
+          "0.6.0",
+          "harness check runs the manifest, harness lint-meta the whole-repo rules, harness catalog documents them."
+        ]
       ]
     },
     {
@@ -90,29 +159,106 @@
       "state": "shipped",
       "install": "npm i -D @noctcore/eslint-plugin-code-quality @typescript-eslint/parser",
       "links": [
-        ["Docs", "https://noctcore.github.io/eslint-plugins/"],
-        ["Repository", "https://github.com/noctcore/eslint-plugins"],
-        ["Where to start", "https://github.com/noctcore/eslint-plugins#where-to-start"]
+        [
+          "Docs",
+          "https://noctcore.github.io/eslint-plugins/"
+        ],
+        [
+          "Repository",
+          "https://github.com/noctcore/eslint-plugins"
+        ],
+        [
+          "Where to start",
+          "https://github.com/noctcore/eslint-plugins#where-to-start"
+        ]
       ],
       "note": "New here? Start with code-quality, async-safety and contracts.",
       "packages": [
-        ["eslint-plugin-code-quality", "1.0.0", "Guard clauses, comment and test hygiene, deterministic time."],
-        ["eslint-plugin-async-safety", "1.0.0", "Fetch timeouts, AbortSignal forwarding, async races."],
-        ["eslint-plugin-contracts", "1.1.0", "IO boundaries, error taxonomy, schema naming, env access, money."],
-        ["eslint-plugin-security", "1.0.0", "Shell injection, path traversal, SSRF, open redirect, XSS."],
-        ["eslint-plugin-observability", "1.0.0", "Structured logs, no sensitive fields, no lost error detail."],
-        ["eslint-plugin-react", "1.1.0", "Prop drilling, state colocation, effect safety, web storage."],
-        ["eslint-plugin-rsc", "0.1.3", "Server Components: navigation errors that must not be swallowed."],
-        ["eslint-plugin-llm", "0.1.3", "LLM output treated as untrusted input before a sink."],
-        ["eslint-plugin-nestjs", "0.2.0", "Queue jobs keyed against retries, schedules with a time zone."],
-        ["eslint-plugin-query", "0.2.0", "TanStack Query and tRPC cache correctness."],
-        ["eslint-plugin-electron", "0.1.0", "Renderer isolation flags, IPC sender checks, one shell module."],
-        ["eslint-plugin-dates", "0.1.0", "Calendar days read in one zone, date-only parsing."],
-        ["eslint-plugin-prisma", "1.0.0", "Tenancy, soft-delete, raw SQL and transaction guardrails."],
-        ["eslint-plugin-architecture", "1.1.0", "Folder per component, barrels, feature boundaries."],
-        ["eslint-plugin-monorepo", "1.0.0", "Workspace package boundaries and exports-aware imports."],
-        ["lint-meta-rules", "1.1.0", "Whole-repo rules ESLint cannot reach, run by harness lint-meta."],
-        ["eslint-utils", "0.2.0", "The rule creator and AST helpers the plugins are built on."]
+        [
+          "eslint-plugin-code-quality",
+          "1.0.0",
+          "Guard clauses, comment and test hygiene, deterministic time."
+        ],
+        [
+          "eslint-plugin-async-safety",
+          "1.0.0",
+          "Fetch timeouts, AbortSignal forwarding, async races."
+        ],
+        [
+          "eslint-plugin-contracts",
+          "1.1.0",
+          "IO boundaries, error taxonomy, schema naming, env access, money."
+        ],
+        [
+          "eslint-plugin-security",
+          "1.0.0",
+          "Shell injection, path traversal, SSRF, open redirect, XSS."
+        ],
+        [
+          "eslint-plugin-observability",
+          "1.0.0",
+          "Structured logs, no sensitive fields, no lost error detail."
+        ],
+        [
+          "eslint-plugin-react",
+          "1.1.0",
+          "Prop drilling, state colocation, effect safety, web storage."
+        ],
+        [
+          "eslint-plugin-rsc",
+          "0.1.3",
+          "Server Components: navigation errors that must not be swallowed."
+        ],
+        [
+          "eslint-plugin-llm",
+          "0.1.3",
+          "LLM output treated as untrusted input before a sink."
+        ],
+        [
+          "eslint-plugin-nestjs",
+          "0.2.0",
+          "Queue jobs keyed against retries, schedules with a time zone."
+        ],
+        [
+          "eslint-plugin-query",
+          "0.2.0",
+          "TanStack Query and tRPC cache correctness."
+        ],
+        [
+          "eslint-plugin-electron",
+          "0.1.0",
+          "Renderer isolation flags, IPC sender checks, one shell module."
+        ],
+        [
+          "eslint-plugin-dates",
+          "0.1.0",
+          "Calendar days read in one zone, date-only parsing."
+        ],
+        [
+          "eslint-plugin-prisma",
+          "1.0.0",
+          "Tenancy, soft-delete, raw SQL and transaction guardrails."
+        ],
+        [
+          "eslint-plugin-architecture",
+          "1.1.0",
+          "Folder per component, barrels, feature boundaries."
+        ],
+        [
+          "eslint-plugin-monorepo",
+          "1.0.0",
+          "Workspace package boundaries and exports-aware imports."
+        ],
+        [
+          "lint-meta-rules",
+          "1.1.0",
+          "Whole-repo rules ESLint cannot reach, run by harness lint-meta."
+        ],
+        [
+          "eslint-utils",
+          "0.2.0",
+          "The rule creator and AST helpers the plugins are built on."
+        ]
       ]
     },
     {
@@ -125,13 +271,26 @@
       "state": "shipped",
       "install": "npm i -D @noctcore/showcase-kit playwright",
       "links": [
-        ["Docs", "https://noctcore.github.io/showcase-kit/"],
-        ["Repository", "https://github.com/noctcore/showcase-kit"],
-        ["Gallery", "https://noctcore.github.io/showcase-kit/gallery/"]
+        [
+          "Docs",
+          "https://noctcore.github.io/showcase-kit/"
+        ],
+        [
+          "Repository",
+          "https://github.com/noctcore/showcase-kit"
+        ],
+        [
+          "Gallery",
+          "https://noctcore.github.io/showcase-kit/gallery/"
+        ]
       ],
       "note": "Needs Node 22 and Playwright 1.50 or newer.",
       "packages": [
-        ["showcase-kit", "0.3.1", "The showcase CLI: raw captures, framed README images, portfolio images, hero banners, terminal clips and app icons."]
+        [
+          "showcase-kit",
+          "0.3.1",
+          "The showcase CLI: raw captures, framed README images, portfolio images, hero banners, terminal clips and app icons."
+        ]
       ]
     }
   ]

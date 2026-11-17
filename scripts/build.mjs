@@ -21,9 +21,9 @@ function sheetSvg(sheet, variant) {
   const narrow = variant === 'narrow';
   const body =
     sheet.form === 'ledger'
-      ? ledger(sheet.rows, narrow ? { name: 34, detail: 26, verdict: 26, footer: 25 } : {})
-      : passage(sheet.diagram, sheet.mark, narrow ? { label: 44, name: 46, end: 30, rowGap: 60 } : {});
-  const box = narrow ? (sheet.form === 'ledger' ? '0 30 1040 640' : '0 20 1040 640') : '0 0 1040 640';
+      ? ledger(sheet.rows, narrow ? { name: 42, detail: 30, verdict: 30, footer: 30, stacked: true } : {})
+      : passage(sheet.diagram, sheet.mark, narrow ? { label: 40, name: 46, end: 32, rowGap: 60, pairTop: 50 } : { label: 28, name: 32, end: 24 });
+  const box = narrow ? (sheet.form === 'ledger' ? '0 30 1040 1000' : '0 20 1040 640') : (sheet.form === 'ledger' ? '0 0 1040 640' : '0 24 1040 600');
   return `<svg class="draw draw-${variant}" viewBox="${box}" role="img" aria-labelledby="t-${sheet.id}-${variant}"><title id="t-${sheet.id}-${variant}">${esc(sheet.alt)}</title>${body}</svg>`;
 }
 
