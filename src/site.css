@@ -108,7 +108,7 @@ p { margin: 0; }
 
 /* ---------- hero ---------- */
 .hero { padding: clamp(48px, 8vw, 104px) 0 clamp(48px, 6vw, 80px); }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 64px); align-items: start; }
 .hero h1 {
   margin-top: 22px;
   font-size: clamp(60px, 10.4vw, 156px);
@@ -121,11 +121,12 @@ p { margin: 0; }
 .cmd-hero { margin-top: 26px; max-width: 460px; }
 .cmd-note { margin-top: 10px; font-size: 14px; color: var(--sec); max-width: 52ch; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
-.hero-mark { margin: 0; border: 1px solid var(--line); background: var(--bg); }
+.hero-mark { margin: 52px 0 0; border: 1px solid var(--line); background: var(--bg); }
 .hero-mark svg { display: block; width: 100%; height: auto; padding: 18px 14px 6px; overflow: visible; }
 .hero-mark figcaption { margin: 0; border-top: 1px solid var(--line); }
 .hero-tb { grid-template-columns: 1fr 1fr; border-bottom: 0; }
 .hero-tb div:nth-child(odd):not(.tb-wide) { border-right: 1px solid var(--line); }
+.hero-tb div:nth-child(even) { border-right: 0; }
 .hero-tb dd { font-size: 14px; }
 .hero-tb .tb-wide dd { font-family: var(--font); font-size: 15px; line-height: 1.5; color: var(--sec); }
 
@@ -306,7 +307,10 @@ text { font-family: var(--mono); }
 /* ---------- apps ---------- */
 .apps { padding: clamp(56px, 6vw, 96px) 0 clamp(72px, 8vw, 120px); border-top: 1px solid var(--line); }
 .app-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); border-top: 1px solid var(--line); }
-.app { padding: 36px 0 8px; display: flex; flex-direction: column; gap: 16px; }
+/* Both apps share six rows, so notes, facts and buttons line up across the columns. */
+.app { padding: 36px 0 8px; display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: 16px; align-content: start; }
+.app-head { align-self: end; }
+.app .links { align-self: end; }
 .app + .app { padding-left: clamp(24px, 4vw, 64px); border-left: 1px solid var(--line); }
 .app-active { padding-right: clamp(24px, 4vw, 64px); }
 .app.app-maintenance h3 { font-size: clamp(30px, 3vw, 40px); }

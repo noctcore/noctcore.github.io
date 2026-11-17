@@ -64,7 +64,7 @@ export const sheets = [
       { name: 'unit-tests', detail: 'node --test', verdict: 'passed' },
       { name: 'lockfile-registry-resolutions', detail: 'lint-meta, supply chain', verdict: 'passed' },
       { name: 'actionlint', detail: 'pinned, native binary', verdict: 'passed' },
-      { name: 'github-actions-secret-no-install', detail: 'lint-meta, a job reads a token and installs', verdict: 'failed' },
+      { name: 'github-actions-secret-no-install', detail: 'lint-meta, token held during install', verdict: 'failed' },
       { name: 'zizmor', detail: 'no pinned binary, no Docker', verdict: 'blocked, exit 2' },
     ],
     detail: [

@@ -174,17 +174,18 @@ export function passage(spec, markName, { label = 32, name = 36, end = 26, rowGa
  * ending in a verdict. Passing tracks land on a core square; stopped ones are
  * dashed copper and end in a cap.
  */
-export function ledger(rows, { name = 30, detail = 22, verdict = 22, footer = 21, stacked = false } = {}) {
-  // Wide: name and track share a row. Stacked (narrow screens): the track
-  // runs under the name across the full width, so the lettering can be larger.
-  const spine = 62;
-  const top = 92;
-  const gap = stacked ? 204 : 104;
-  const t0 = stacked ? spine + 66 : 640;
-  const t1 = 980;
-  const trackDy = stacked ? detail + 52 : 0;
+export function ledger(rows, { name = 30, detail = 22, verdict = 22, footer = 21, num = 18, stacked = false, width = 1040 } = {}) {
+  // Wide: name and track share a row. Stacked (phones): the track runs under
+  // the name, in a narrower space, so the lettering scales up on screen.
+  const spine = stacked ? 22 : 62;
+  const top = stacked ? 70 : 92;
+  const gap = stacked ? name + detail + verdict + 74 : 104;
+  const lx = stacked ? spine + 58 : spine + 66;
+  const t0 = stacked ? lx : 640;
+  const t1 = width - (stacked ? 24 : 60);
+  const trackDy = stacked ? detail + 34 : 0;
   let out = `<g class="d-bed"><path class="s-line" fill="none" d="M${spine} ${top - 26}V${top + gap * (rows.length - 1) + 40}"/></g>`;
-  out += text('.noctcore/harness.json', spine + 26, top - 40, 't-end', stacked ? 28 : 22);
+  out += text('.noctcore/harness.json', spine + 26, top - (stacked ? 34 : 40), 't-end', stacked ? 20 : 22);
   rows.forEach((row, i) => {
     const y = top + i * gap + 30;
     const ty = y + trackDy;
@@ -192,9 +193,9 @@ export function ledger(rows, { name = 30, detail = 22, verdict = 22, footer = 21
     out += `<g class="d-name" data-gate="${i}" style="--i:${i}">`;
     out += `<rect class="${passed ? 'f-acc' : 'f-bg s-stop-solid'}" x="${spine - 7}" y="${y - 7}" width="14" height="14"/>`;
     out += `<path class="s-line" fill="none" d="M${spine + 7} ${y}h14"/>`;
-    out += text(String(i + 1).padStart(2, '0'), spine + 30, y - 10, 't-num', stacked ? 22 : 18);
-    out += text(row.name, spine + 66, y - 4 + (stacked ? 6 : 0), 't-name', name);
-    out += text(row.detail, spine + 66, y + 30 + (stacked ? 10 : 0), 't-detail', detail);
+    out += text(String(i + 1).padStart(2, '0'), spine + 26, stacked ? y + 7 : y - 10, 't-num', num);
+    out += text(row.name, lx, y - 4 + (stacked ? 12 : 0), 't-name', name);
+    out += text(row.detail, lx, y + 30 + (stacked ? 10 : 0), 't-detail', detail);
     out += `</g>`;
     const vy = ty + verdict + 20;
     if (passed) {
@@ -212,7 +213,7 @@ export function ledger(rows, { name = 30, detail = 22, verdict = 22, footer = 21
       out += `<g class="d-label" data-gate="${i}" style="--i:${i}">${text(row.verdict, t1 + 4 - mono(row.verdict, verdict), vy, 't-stop', verdict)}</g>`;
     }
   });
-  const fy = top + gap * (rows.length - 1) + 30 + trackDy + verdict + (stacked ? 76 : 54);
+  const fy = top + gap * (rows.length - 1) + 30 + trackDy + verdict + (stacked ? 60 : 54);
   out += `<g class="d-ends"><rect class="f-stop" x="${spine - 8}" y="${fy - 12}" width="16" height="16"/>`;
   out += text('exit 1: every check ran, both stops are listed', spine + 26, fy + 2, 't-stop', footer);
   out += `</g>`;
@@ -242,7 +243,7 @@ export function markDrawing() {
   out += `<path class="s-line-dash" d="M${P(12)} ${P(12)}H${P(52)}V${P(52)}H${P(12)}z"/>`;
   out += `<path class="hm-route s-route" d="M${P(-6)} ${P(32)}H${P(70)}"/>`;
   // A way around the core: closed by the bar above, so it stops in copper.
-  out += `<g class="hm-stop"><path class="s-stop-dash" d="M${P(4)} ${P(32) - 6}V${P(10)}H${P(20)}V${P(12) - 1}"/><path class="s-stop-cap" d="M${P(20) - 9} ${P(12) - 1}h18"/><circle class="f-stop" cx="${P(20)}" cy="${P(12) - 1}" r="3"/>${text('around the core', P(1), P(7), 't-stop', 16)}</g>`;
+  out += `<g class="hm-stop"><path class="s-stop-dash" d="M${P(4)} ${P(32) - 6}V${P(10)}H${P(20)}V${P(12) - 1}"/><path class="s-stop-cap" d="M${P(20) - 9} ${P(12) - 1}h18"/><circle class="f-stop" cx="${P(20)}" cy="${P(12) - 1}" r="3"/>${text('around the core', P(1), P(7), 't-stop', 18)}</g>`;
   out += `<g class="hm-solid"><path class="f-side" d="${side}"/><path class="f-face" d="${face}"/><path class="s-hair-thick" d="${topEdges(rects).replace(/-?\d+(\.\d+)?/g, (n) => P(Number(n)))}"/></g>`;
   // The passage through the core: one route, in on the left, out on the right.
   out += `<circle class="f-bg s-route" cx="${P(-6)}" cy="${P(32)}" r="6"/>`;
@@ -255,21 +256,21 @@ export function markDrawing() {
   const sx = P(64) + 26;
   out += dim(sx, P(12), sx, P(20)) + capV(sx, P(12)) + capV(sx, P(20));
   out += `<path class="s-dim-lead" d="M${P(52)} ${P(12)}H${sx + 6}M${P(52)} ${P(20)}H${sx + 6}"/>`;
-  out += text('8u stroke', sx + 12, P(16) + 6, 't-dim', 16);
+  out += text('8u stroke', sx + 12, P(16) + 6, 't-dim', 18);
   // Core, 8 units, under the drawing.
   const cy = P(64) + 30;
   out += dim(P(28), cy, P(36), cy) + capH(P(28), cy) + capH(P(36), cy);
   out += `<path class="s-dim-lead" d="M${P(28)} ${P(52) + 26}V${cy + 6}M${P(36)} ${P(52) + 26}V${cy + 6}"/>`;
-  out += text('1 core, 8u', P(28) - 22, cy + 28, 't-dim', 16);
+  out += text('1 core, 8u', P(28) - 22, cy + 28, 't-dim', 18);
   // Parts, called out on the right under the stroke: the lugs and the bars.
   out += `<path class="s-dim-lead" d="M${P(52)} ${P(42)}H${sx + 6}M${P(52)} ${P(50)}H${sx + 6}"/>`;
   out += `<circle class="f-acc" cx="${P(52)}" cy="${P(42)}" r="3"/><circle class="f-acc" cx="${P(52)}" cy="${P(50)}" r="3"/>`;
-  out += text('4 lugs, 8x4u', sx + 12, P(42) + 5, 't-dim', 16);
-  out += text('2 bars, 40x8u', sx + 12, P(50) + 5, 't-dim', 16);
+  out += text('4 lugs, 8x4u', sx + 12, P(42) + 5, 't-dim', 18);
+  out += text('2 bars, 40x8u', sx + 12, P(50) + 5, 't-dim', 18);
   // Canvas, 64 units, above.
   const ty = -24;
   out += dim(0, ty, P(64), ty) + capH(0, ty) + capH(P(64), ty);
-  out += text('64u canvas, 4u grid', 0, ty - 12, 't-dim', 16);
+  out += text('64u canvas, 4u grid', 0, ty - 12, 't-dim', 18);
   out += `</g>`;
   return out;
 }
@@ -281,7 +282,7 @@ export function markDrawing() {
  * the route (the last step highest) and the steps carry their numbers instead
  * of their names; the title block right under the drawing names each number.
  */
-export function passageNarrow(spec, markName, { label = 26, end = 22, num = 22 } = {}) {
+export function passageNarrow(spec, markName, { label = 26, end = 22, num = 26 } = {}) {
   const rects = marks[markName];
   const { gates, start } = spec;
   const W = 600;
