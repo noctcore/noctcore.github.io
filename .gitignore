@@ -2,4 +2,6 @@ node_modules/
 dist/
 .DS_Store
 preview.html
-review/r*/
+# Review notes and screenshots stay local.
+critique.md
+review/
