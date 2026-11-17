@@ -4,7 +4,7 @@ import { mkdirSync, readFileSync, writeFileSync, copyFileSync, rmSync, existsSyn
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { sheets } from './sheets.mjs';
-import { flatMark, ledger, markDrawing, passage } from './diagram.mjs';
+import { flatMark, ledger, markDrawing, passage, passageNarrow } from './diagram.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = (p) => join(root, 'src', p);
@@ -21,9 +21,9 @@ function sheetSvg(sheet, variant) {
   const narrow = variant === 'narrow';
   const body =
     sheet.form === 'ledger'
-      ? ledger(sheet.rows, narrow ? { name: 42, detail: 30, verdict: 30, footer: 30, stacked: true } : {})
-      : passage(sheet.diagram, sheet.mark, narrow ? { label: 40, name: 46, end: 32, rowGap: 60, pairTop: 50, numbers: false } : { label: 23, name: 27, end: 21 });
-  const box = narrow ? (sheet.form === 'ledger' ? '0 30 1040 1000' : '0 20 1040 640') : (sheet.form === 'ledger' ? '0 0 1040 640' : '0 34 1040 566');
+      ? ledger(sheet.rows, narrow ? { name: 48, detail: 34, verdict: 36, footer: 34, stacked: true } : {})
+      : narrow ? passageNarrow(sheet.diagram, sheet.mark) : passage(sheet.diagram, sheet.mark, { label: 23, name: 27, end: 21 });
+  const box = narrow ? (sheet.form === 'ledger' ? '0 30 1040 1120' : '0 0 600 384') : (sheet.form === 'ledger' ? '0 0 1040 640' : '0 34 1040 566');
   return `<svg class="draw draw-${variant}" viewBox="${box}" role="img" aria-labelledby="t-${sheet.id}-${variant}"><title id="t-${sheet.id}-${variant}">${esc(sheet.alt)}</title>${body}</svg>`;
 }
 
@@ -226,8 +226,16 @@ ${inline ? `<style>${css}</style>` : `<link rel="stylesheet" href="${css}">`}
       <p class="cmd-note">Run a repo's own checks in any CI. Zero runtime dependencies, no network, no account.</p>
     </div>
     <figure class="hero-mark" aria-label="The noctcore mark drawn as a dimensioned plan: a 64 unit canvas on a 4 unit grid, 8 unit strokes, closed above and below and open at the core. One route passes straight through the core; a dashed copper branch that tries to go around it stops on the closed bar.">
-      <svg viewBox="0 6 660 600" role="img" aria-hidden="true">${markDrawing()}</svg>
-      <figcaption><span>Held passage.</span> Work passes through the core; nothing passes around it.</figcaption>
+      <svg viewBox="0 6 720 600" role="img" aria-hidden="true">${markDrawing()}</svg>
+      <figcaption>
+        <dl class="titleblock hero-tb">
+          <div><dt>Sheet</dt><dd>00, the org mark</dd></div>
+          <div><dt>Form</dt><dd>plan, held passage</dd></div>
+          <div><dt>Parts</dt><dd>7 rects on 64u</dd></div>
+          <div><dt>Routes</dt><dd>1 through, 0 around</dd></div>
+          <div class="tb-wide"><dt>Note</dt><dd>Work passes through the core; nothing passes around it. Every sheet below is drawn the same way.</dd></div>
+        </dl>
+      </figcaption>
     </figure>
   </div>
 </section>

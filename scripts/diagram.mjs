@@ -179,7 +179,7 @@ export function ledger(rows, { name = 30, detail = 22, verdict = 22, footer = 21
   // runs under the name across the full width, so the lettering can be larger.
   const spine = 62;
   const top = 92;
-  const gap = stacked ? 176 : 104;
+  const gap = stacked ? 204 : 104;
   const t0 = stacked ? spine + 66 : 640;
   const t1 = 980;
   const trackDy = stacked ? detail + 52 : 0;
@@ -260,11 +260,103 @@ export function markDrawing() {
   const cy = P(64) + 30;
   out += dim(P(28), cy, P(36), cy) + capH(P(28), cy) + capH(P(36), cy);
   out += `<path class="s-dim-lead" d="M${P(28)} ${P(52) + 26}V${cy + 6}M${P(36)} ${P(52) + 26}V${cy + 6}"/>`;
-  out += text('8u core', P(28) - 8, cy + 28, 't-dim', 16);
+  out += text('1 core, 8u', P(28) - 22, cy + 28, 't-dim', 16);
+  // Parts, called out on the right under the stroke: the lugs and the bars.
+  out += `<path class="s-dim-lead" d="M${P(52)} ${P(42)}H${sx + 6}M${P(52)} ${P(50)}H${sx + 6}"/>`;
+  out += `<circle class="f-acc" cx="${P(52)}" cy="${P(42)}" r="3"/><circle class="f-acc" cx="${P(52)}" cy="${P(50)}" r="3"/>`;
+  out += text('4 lugs, 8x4u', sx + 12, P(42) + 5, 't-dim', 16);
+  out += text('2 bars, 40x8u', sx + 12, P(50) + 5, 't-dim', 16);
   // Canvas, 64 units, above.
   const ty = -24;
   out += dim(0, ty, P(64), ty) + capH(0, ty) + capH(P(64), ty);
   out += text('64u canvas, 4u grid', 0, ty - 12, 't-dim', 16);
+  out += `</g>`;
+  return out;
+}
+
+/**
+ * The passage drawn for phones. Same angle, route, blocks, ticks and capped
+ * copper branches, but in a 600 x 380 space so it scales up about 1.7 times on
+ * a 390 px screen. To make that room, the copper labels stack in rows above
+ * the route (the last step highest) and the steps carry their numbers instead
+ * of their names; the title block right under the drawing names each number.
+ */
+export function passageNarrow(spec, markName, { label = 26, end = 22, num = 22 } = {}) {
+  const rects = marks[markName];
+  const { gates, start } = spec;
+  const W = 600;
+  const x0 = 30, x1 = 570;
+  const slope = Math.tan((21.3 * Math.PI) / 180);
+  const y0 = 330;
+  const y1 = y0 - (x1 - x0) * slope;
+  const at = (x) => y0 - (x - x0) * slope;
+  const angle = Math.atan2(y1 - y0, x1 - x0);
+  const xs = { 2: [170, 400], 3: [120, 270, 420], 4: [110, 215, 320, 425] }[gates.length];
+  const sizes = { 2: [80, 80], 3: [72, 84, 72], 4: [64, 64, 64, 64] }[gates.length];
+  let out = `<g class="d-bed">`;
+  out += `<g opacity=".55"><path class="s-line" fill="none" d="M${x0 + 4} ${r(y0 + 30)}L${x1 + 6} ${r(y1 + 30)}M${x0 + 4} ${r(y0 + 44)}L${x1 + 6} ${r(y1 + 44)}"/></g>`;
+  out += `<path class="f-shadow" d="M${x0} ${y0 + 7}L${x1} ${r(y1 + 7)}v17L${x0} ${y0 + 24}z"/>`;
+  out += `<path class="f-raised s-line" d="M${x0} ${y0 - 7}L${x1} ${r(y1 - 7)}v14L${x0} ${y0 + 7}z"/>`;
+  out += `</g>`;
+  out += `<path class="d-route s-route" pathLength="1" d="M${x0} ${y0}L${x1} ${r(y1)}"/>`;
+  const ticks = [x0 + 26, ...xs.slice(0, -1).map((x, i) => (x + xs[i + 1]) / 2), x1 - 20];
+  out += `<g class="d-ticks">${ticks.map((x) => tick(x, at(x), angle)).join('')}</g>`;
+  out += `<g class="d-tokens" data-route="${x0},${y0},${x1},${r(y1)}" data-gates="${xs.join(',')}" data-sizes="${sizes.join(',')}" data-stops="${gates.map((g) => (g.stops?.length ? 1 : 0)).join(',')}"></g>`;
+  // Label rows: the last stopping step takes the top row.
+  const rows = [];
+  [...gates.keys()].reverse().forEach((i) => (gates[i].stops ?? []).forEach((s, k) => rows.push({ i, s, k })));
+  const rowY = (n) => 34 + n * (label + 10);
+  const labels = [];
+  const branches = [];
+  gates.forEach((gate, i) => {
+    const stops = gate.stops ?? [];
+    if (!stops.length) return;
+    const x = xs[i];
+    const size = sizes[i];
+    const capY = at(x) - size / 2 + (markTop(rects) * size) / 64;
+    const mine = rows.map((row, n) => ({ ...row, n })).filter((row) => row.i === i);
+    const widths = mine.map((row) => mono(row.s, label));
+    const widest = Math.max(...widths);
+    // A lone label centres over its step; a pair sits to the right of it so
+    // their joined leader can drop straight onto the block.
+    const lx = mine.length === 1
+      ? Math.max(8, Math.min(x - widest / 2, W - 8 - widest))
+      : Math.max(8, Math.min(x + 18, W - 8 - widest));
+    let lettering = '';
+    mine.forEach((row) => (lettering += text(row.s, lx, rowY(row.n), 't-stop', label)));
+    labels.push(`<g class="d-label" data-gate="${i}" style="--i:${i}">${lettering}</g>`);
+    const lastY = rowY(mine[mine.length - 1].n);
+    const bend = capY - 30;
+    let path;
+    if (mine.length === 1) {
+      const ax = Math.max(lx + 10, Math.min(x, lx + widest - 10));
+      path = `M${r(ax)} ${r(lastY + 9)}V${r(bend)}L${r(x)} ${r(bend + 16)}V${r(capY)}`;
+      branches.push(`<g class="d-branch" data-gate="${i}" style="--i:${i}">${stopped(path, x, capY)}</g>`);
+    } else {
+      // Two causes, one stop: ticks from each label join one leader on the right.
+      const jx = lx - 12;
+      const join = mine.map((row) => `M${r(lx - 6)} ${r(rowY(row.n) - label * 0.31)}H${r(jx)}`).join('');
+      const top = rowY(mine[0].n) - label * 0.31;
+      path = `M${r(jx)} ${r(top)}V${r(bend)}L${r(x)} ${r(bend + 16)}V${r(capY)}`;
+      branches.push(`<g class="d-branch" data-gate="${i}" style="--i:${i}"><path class="s-stop-dash" d="${join}"/>${stopped(path, x, capY)}</g>`);
+    }
+  });
+  out += labels.join('');
+  gates.forEach((gate, i) => {
+    out += `<g class="d-block" data-gate="${i}" style="--i:${i}">${block(rects, xs[i], at(xs[i]), sizes[i])}</g>`;
+  });
+  out += branches.join('');
+  gates.forEach((gate, i) => {
+    const x = xs[i];
+    const y = at(x);
+    out += `<g class="d-name" data-gate="${i}" style="--i:${i}">${text(String(i + 1).padStart(2, '0'), x + sizes[i] / 2 + 6, y + sizes[i] / 2 + 2, 't-num', num)}</g>`;
+  });
+  out += `<g class="d-ends">`;
+  out += `<circle class="f-bg s-route" cx="${x0}" cy="${y0}" r="6"/>`;
+  out += `<circle class="f-acc" cx="${x1}" cy="${r(y1)}" r="7"/>`;
+  out += `<circle class="s-line" fill="none" cx="${x1}" cy="${r(y1)}" r="13"/>`;
+  out += text(start, 8, y0 + 40, 't-end', end);
+  out += text(spec.end, W - 4 - mono(spec.end, end), r(y1 - 24), 't-end', end);
   out += `</g>`;
   return out;
 }

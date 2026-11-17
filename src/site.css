@@ -121,10 +121,13 @@ p { margin: 0; }
 .cmd-hero { margin-top: 26px; max-width: 460px; }
 .cmd-note { margin-top: 10px; font-size: 14px; color: var(--sec); max-width: 52ch; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
-.hero-mark { margin: 0 calc(var(--gut) * -0.5) 0 0; }
-.hero-mark svg { width: 100%; height: auto; overflow: visible; }
-.hero-mark figcaption { margin-top: 10px; font: 400 14px/1.6 var(--mono); color: var(--sec); padding-left: 9%; max-width: 46ch; }
-.hero-mark figcaption span { color: var(--fg); }
+.hero-mark { margin: 0; border: 1px solid var(--line); background: var(--bg); }
+.hero-mark svg { display: block; width: 100%; height: auto; padding: 18px 14px 6px; overflow: visible; }
+.hero-mark figcaption { margin: 0; border-top: 1px solid var(--line); }
+.hero-tb { grid-template-columns: 1fr 1fr; border-bottom: 0; }
+.hero-tb div:nth-child(odd):not(.tb-wide) { border-right: 1px solid var(--line); }
+.hero-tb dd { font-size: 14px; }
+.hero-tb .tb-wide dd { font-family: var(--font); font-size: 15px; line-height: 1.5; color: var(--sec); }
 
 /* Diagram paint, shared by every drawing. */
 .f-face { fill: var(--acc); }
@@ -415,8 +418,7 @@ text { font-family: var(--mono); }
 }
 @media (max-width: 860px) {
   .hero-grid, .why-grid, .app-grid, .family, .pr-list { grid-template-columns: 1fr; }
-  .hero-mark { max-width: 380px; margin-top: 8px; }
-  .hero-mark figcaption { padding-left: 0; }
+  .hero-mark { max-width: 520px; margin: 8px 0 0; }
   .app + .app { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); margin-top: 28px; }
   .app-active { padding-right: 0; }
   .fam-id { position: static; }
