@@ -82,7 +82,7 @@ const text = (value, x, y, cls, size) =>
  * The passage. `scale` sets the lettering: the wide form uses the generator's
  * sizes, the narrow form enlarges them so a 390 px screen still reads them.
  */
-export function passage(spec, markName, { label = 32, name = 36, end = 26, rowGap = 45, pairTop = null } = {}) {
+export function passage(spec, markName, { label = 32, name = 36, end = 26, rowGap = 45, pairTop = null, numbers = true } = {}) {
   const rects = marks[markName];
   const { gates, start } = spec;
   const x0 = 76, y0 = 501, x1 = 950, y1 = 161;
@@ -157,7 +157,7 @@ export function passage(spec, markName, { label = 32, name = 36, end = 26, rowGa
   gates.forEach((gate, index) => {
     const x = xs[index];
     const y = at(x);
-    out += `<g class="d-name" data-gate="${index}" style="--i:${index}"><path class="s-line" fill="none" d="M${x} ${r(y + 65)}v39h20"/>${text(String(index + 1).padStart(2, '0'), x + 27, y + 104 + name * 0.22, 't-num', Math.round(name * 0.62))}${text(gate.name, x - 39, y + 104 + name * 1.19, 't-name', name)}</g>`;
+    out += `<g class="d-name" data-gate="${index}" style="--i:${index}"><path class="s-line" fill="none" d="M${x} ${r(y + 65)}v39h20"/>${numbers ? text(String(index + 1).padStart(2, '0'), x + 27, y + 104 + name * 0.22, 't-num', Math.round(name * 0.62)) : ''}${text(gate.name, x - 39, y + 104 + name * 1.19, 't-name', name)}</g>`;
   });
   out += `<g class="d-ends">`;
   out += `<circle class="f-bg s-route" cx="${x0}" cy="${y0}" r="7"/>`;
