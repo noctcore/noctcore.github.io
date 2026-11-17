@@ -157,7 +157,7 @@ export function passage(spec, markName, { label = 32, name = 36, end = 26, rowGa
   gates.forEach((gate, index) => {
     const x = xs[index];
     const y = at(x);
-    out += `<g class="d-name" data-gate="${index}" style="--i:${index}"><path class="s-line" fill="none" d="M${x} ${r(y + 65)}v39h20"/>${text(gate.name, x - 39, y + 104 + name * 1.19, 't-name', name)}</g>`;
+    out += `<g class="d-name" data-gate="${index}" style="--i:${index}"><path class="s-line" fill="none" d="M${x} ${r(y + 65)}v39h20"/>${text(String(index + 1).padStart(2, '0'), x + 27, y + 104 + name * 0.22, 't-num', Math.round(name * 0.62))}${text(gate.name, x - 39, y + 104 + name * 1.19, 't-name', name)}</g>`;
   });
   out += `<g class="d-ends">`;
   out += `<circle class="f-bg s-route" cx="${x0}" cy="${y0}" r="7"/>`;
