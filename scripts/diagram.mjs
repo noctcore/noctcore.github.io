@@ -164,7 +164,7 @@ export function passage(spec, markName, { label = 32, name = 36, end = 26, rowGa
   out += `<circle class="f-acc" cx="${x1}" cy="${y1}" r="9"/>`;
   out += `<circle class="s-line" fill="none" cx="${x1}" cy="${y1}" r="16"/>`;
   out += text(start, Math.max(8, Math.min(51, 196 - mono(start, end))), 547 + (end - 26) * 1.2, 't-end', end);
-  out += text(spec.end, Math.min(884, 1036 - mono(spec.end, end)), 117, 't-end', end);
+  out += text(spec.end, Math.min(906, 1036 - mono(spec.end, end)), 117, 't-end', end);
   out += `</g>`;
   return out;
 }

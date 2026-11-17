@@ -123,7 +123,7 @@ p { margin: 0; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 .hero-mark { margin: 0 calc(var(--gut) * -0.5) 0 0; }
 .hero-mark svg { width: 100%; height: auto; overflow: visible; }
-.hero-mark figcaption { margin-top: 10px; font: 400 14px/1.6 var(--mono); color: var(--sec); padding-left: 21%; }
+.hero-mark figcaption { margin-top: 10px; font: 400 14px/1.6 var(--mono); color: var(--sec); padding-left: 9%; max-width: 46ch; }
 .hero-mark figcaption span { color: var(--fg); }
 
 /* Diagram paint, shared by every drawing. */
@@ -267,7 +267,7 @@ text { font-family: var(--mono); }
 .js .set.is-scrub .progress span { display: block; height: 100%; width: 100%; background: var(--line); transform-origin: left; transform: scaleX(var(--p, 0)); }
 
 /* ---------- why ---------- */
-.why { padding: clamp(72px, 8vw, 128px) 0; }
+.why { padding: clamp(64px, 7vw, 104px) 0 clamp(56px, 6vw, 88px); }
 .why-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 96px); }
 .why-claim { position: sticky; top: calc(var(--top) + 48px); align-self: start; }
 .why-claim h2 { max-width: 13ch;
@@ -298,7 +298,7 @@ text { font-family: var(--mono); }
 .legend .state { transform: none; }
 
 /* ---------- apps ---------- */
-.apps { padding: clamp(72px, 8vw, 128px) 0; border-top: 1px solid var(--line); }
+.apps { padding: clamp(56px, 6vw, 96px) 0 clamp(72px, 8vw, 120px); border-top: 1px solid var(--line); }
 .app-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); border-top: 1px solid var(--line); }
 .app { padding: 36px 0 8px; display: flex; flex-direction: column; gap: 16px; }
 .app + .app { padding-left: clamp(24px, 4vw, 64px); border-left: 1px solid var(--line); }
