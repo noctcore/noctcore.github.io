@@ -123,7 +123,7 @@ p { margin: 0; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 .hero-mark { margin: 0 calc(var(--gut) * -0.5) 0 0; }
 .hero-mark svg { width: 100%; height: auto; overflow: visible; }
-.hero-mark figcaption { margin-top: 10px; font: 400 13px/1.6 var(--mono); color: var(--sec); padding-left: 21%; }
+.hero-mark figcaption { margin-top: 10px; font: 400 14px/1.6 var(--mono); color: var(--sec); padding-left: 21%; }
 .hero-mark figcaption span { color: var(--fg); }
 
 /* Diagram paint, shared by every drawing. */
@@ -293,7 +293,7 @@ text { font-family: var(--mono); }
 .jump a:hover { border-color: var(--acc); }
 .jump .mk path { fill: var(--acc); }
 .jump-n { font: 400 12.5px var(--mono); color: var(--sec); }
-.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin: 0 0 18px; font: 400 13px var(--mono); color: var(--sec); }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin: 0 0 18px; font: 400 13.5px var(--mono); color: var(--fg); }
 .legend span.item { display: inline-flex; align-items: center; gap: 8px; }
 .legend .state { transform: none; }
 
@@ -346,7 +346,7 @@ text { font-family: var(--mono); }
 .pkgs a { text-decoration: none; }
 .pkgs a code { font-size: 14px; color: var(--acc); }
 .pkgs a:hover code { text-decoration: underline; text-underline-offset: 3px; }
-.ver { font: 400 13px var(--mono); color: var(--fg); }
+.ver { font: 400 13.5px var(--mono); color: var(--fg); }
 .pkg-what { color: var(--sec); font-size: 15px; line-height: 1.55; }
 .pkgs-one li { grid-template-columns: minmax(0, 300px) 64px minmax(0, 1fr); }
 .pkgs-many { display: grid; grid-template-columns: 1fr 1fr; column-gap: 32px; }
@@ -355,6 +355,13 @@ text { font-family: var(--mono); }
 .pkgs-many .pkg-what { grid-column: 1 / -1; font-size: 14px; }
 .pkgs-many a code { font-size: 13.5px; }
 .fam-note { font-size: 14.5px; color: var(--sec); }
+.more summary { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; border: 1px solid var(--line); cursor: pointer; font-weight: 600; font-size: 14.5px; list-style: none; }
+.more summary::-webkit-details-marker { display: none; }
+.more summary::before { content: "+"; font: 400 16px var(--mono); color: var(--acc); }
+.more[open] summary::before { content: "\2212"; }
+.more summary:hover { border-color: var(--acc); }
+.more[open] summary { margin-bottom: 4px; }
+.pkgs-many { border-bottom: 1px solid var(--line); }
 
 /* ---------- principles ---------- */
 .principles { padding: clamp(72px, 8vw, 128px) 0 clamp(80px, 9vw, 140px); border-top: 1px solid var(--line); }
@@ -433,7 +440,6 @@ text { font-family: var(--mono); }
   .pkgs li, .pkgs-one li { grid-template-columns: minmax(0, 1fr) auto; row-gap: 2px; }
   .pkgs .pkg-what { grid-column: 1 / -1; }
   .pkgs-many { grid-template-columns: 1fr; }
-  .pkgs-many li:last-child { border-bottom: 1px solid var(--line); }
   .hands div, .facts div { grid-template-columns: 1fr; gap: 2px; }
   .lockup { font-size: 19px; }
   .theme-label { display: none; }

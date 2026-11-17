@@ -22,8 +22,8 @@ function sheetSvg(sheet, variant) {
   const body =
     sheet.form === 'ledger'
       ? ledger(sheet.rows, narrow ? { name: 42, detail: 30, verdict: 30, footer: 30, stacked: true } : {})
-      : passage(sheet.diagram, sheet.mark, narrow ? { label: 40, name: 46, end: 38, rowGap: 60, pairTop: 50 } : { label: 23, name: 27, end: 21 });
-  const box = narrow ? (sheet.form === 'ledger' ? '0 30 1040 1000' : '0 20 1040 640') : (sheet.form === 'ledger' ? '0 0 1040 640' : '0 24 1040 600');
+      : passage(sheet.diagram, sheet.mark, narrow ? { label: 40, name: 46, end: 32, rowGap: 60, pairTop: 50, numbers: false } : { label: 23, name: 27, end: 21 });
+  const box = narrow ? (sheet.form === 'ledger' ? '0 30 1040 1000' : '0 20 1040 640') : (sheet.form === 'ledger' ? '0 0 1040 640' : '0 34 1040 566');
   return `<svg class="draw draw-${variant}" viewBox="${box}" role="img" aria-labelledby="t-${sheet.id}-${variant}"><title id="t-${sheet.id}-${variant}">${esc(sheet.alt)}</title>${body}</svg>`;
 }
 
@@ -90,14 +90,19 @@ const apps = data.apps
 
 /* ---------- libraries ---------- */
 const npm = (name) => `https://www.npmjs.com/package/@noctcore/${name}`;
+const row = ([name, version, what]) =>
+  `<li><a href="${npm(name)}"><code>@noctcore/${esc(name)}</code></a><span class="ver">${esc(version)}</span><span class="pkg-what">${esc(what)}</span></li>`;
+// Long families show their starting set and fold the rest behind one control.
+function list(f) {
+  const kind = f.packages.length > 6 ? 'many' : f.packages.length > 1 ? 'some' : 'one';
+  if (kind !== 'many') return `<ul class="pkgs pkgs-${kind}">${f.packages.map(row).join('')}</ul>`;
+  const head = f.packages.slice(0, 6);
+  const rest = f.packages.slice(6);
+  return `<ul class="pkgs pkgs-many">${head.map(row).join('')}</ul><details class="more"><summary>Show the other ${rest.length} packages</summary><ul class="pkgs pkgs-many">${rest.map(row).join('')}</ul></details>`;
+}
 const families = data.families
   .map((f, i) => {
-    const rows = f.packages
-      .map(
-        ([name, version, what]) =>
-          `<li><a href="${npm(name)}"><code>@noctcore/${esc(name)}</code></a><span class="ver">${esc(version)}</span><span class="pkg-what">${esc(what)}</span></li>`,
-      )
-      .join('');
+
     return `
     <article class="family fam-${f.id}" id="lib-${f.id}">
       <div class="fam-id">
@@ -110,7 +115,7 @@ const families = data.families
       <div class="fam-body">
         <p class="fam-what">${esc(f.what)}</p>
         <div class="cmd"><span class="cmd-p" aria-hidden="true">$</span><code>${esc(f.install)}</code><button class="copy" type="button" data-copy="${esc(f.install)}" aria-label="Copy: ${esc(f.install)}">Copy</button></div>
-        <ul class="pkgs pkgs-${f.packages.length > 6 ? 'many' : f.packages.length > 1 ? 'some' : 'one'}">${rows}</ul>
+        ${list(f)}
         <p class="fam-note">${esc(f.note)}</p>
       </div>
     </article>`;
