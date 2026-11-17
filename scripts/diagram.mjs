@@ -241,6 +241,8 @@ export function markDrawing() {
   out += `<path class="s-line" fill="none" d="M0 0H${P(64)}V${P(64)}H0z"/>`;
   out += `<path class="s-line-dash" d="M${P(12)} ${P(12)}H${P(52)}V${P(52)}H${P(12)}z"/>`;
   out += `<path class="hm-route s-route" d="M${P(-6)} ${P(32)}H${P(70)}"/>`;
+  // A way around the core: closed by the bar above, so it stops in copper.
+  out += `<g class="hm-stop"><path class="s-stop-dash" d="M${P(4)} ${P(32) - 6}V${P(10)}H${P(20)}V${P(12) - 1}"/><path class="s-stop-cap" d="M${P(20) - 9} ${P(12) - 1}h18"/><circle class="f-stop" cx="${P(20)}" cy="${P(12) - 1}" r="3"/>${text('around the core', P(1), P(7), 't-stop', 16)}</g>`;
   out += `<g class="hm-solid"><path class="f-side" d="${side}"/><path class="f-face" d="${face}"/><path class="s-hair-thick" d="${topEdges(rects).replace(/-?\d+(\.\d+)?/g, (n) => P(Number(n)))}"/></g>`;
   // The passage through the core: one route, in on the left, out on the right.
   out += `<circle class="f-bg s-route" cx="${P(-6)}" cy="${P(32)}" r="6"/>`;
@@ -253,16 +255,16 @@ export function markDrawing() {
   const sx = P(64) + 26;
   out += dim(sx, P(12), sx, P(20)) + capV(sx, P(12)) + capV(sx, P(20));
   out += `<path class="s-dim-lead" d="M${P(52)} ${P(12)}H${sx + 6}M${P(52)} ${P(20)}H${sx + 6}"/>`;
-  out += text('8u stroke', sx + 12, P(16) + 6, 't-dim', 15);
+  out += text('8u stroke', sx + 12, P(16) + 6, 't-dim', 16);
   // Core, 8 units, under the drawing.
   const cy = P(64) + 30;
   out += dim(P(28), cy, P(36), cy) + capH(P(28), cy) + capH(P(36), cy);
   out += `<path class="s-dim-lead" d="M${P(28)} ${P(52) + 26}V${cy + 6}M${P(36)} ${P(52) + 26}V${cy + 6}"/>`;
-  out += text('8u core', P(28) - 8, cy + 28, 't-dim', 15);
+  out += text('8u core', P(28) - 8, cy + 28, 't-dim', 16);
   // Canvas, 64 units, above.
   const ty = -24;
   out += dim(0, ty, P(64), ty) + capH(0, ty) + capH(P(64), ty);
-  out += text('64u canvas, 4u grid', 0, ty - 12, 't-dim', 15);
+  out += text('64u canvas, 4u grid', 0, ty - 12, 't-dim', 16);
   out += `</g>`;
   return out;
 }

@@ -220,7 +220,7 @@ ${inline ? `<style>${css}</style>` : `<link rel="stylesheet" href="${css}">`}
       <div class="cmd cmd-hero"><span class="cmd-p" aria-hidden="true">$</span><code>npx @noctcore/harness check</code><button class="copy" type="button" data-copy="npx @noctcore/harness check" aria-label="Copy: npx @noctcore/harness check">Copy</button></div>
       <p class="cmd-note">Run a repo's own checks in any CI. Zero runtime dependencies, no network, no account.</p>
     </div>
-    <figure class="hero-mark" aria-label="The noctcore mark drawn as a dimensioned plan: a 64 unit canvas on a 4 unit grid, 8 unit strokes, closed above and below and open at the core, with one route passing straight through the core.">
+    <figure class="hero-mark" aria-label="The noctcore mark drawn as a dimensioned plan: a 64 unit canvas on a 4 unit grid, 8 unit strokes, closed above and below and open at the core. One route passes straight through the core; a dashed copper branch that tries to go around it stops on the closed bar.">
       <svg viewBox="0 6 660 600" role="img" aria-hidden="true">${markDrawing()}</svg>
       <figcaption><span>Held passage.</span> Work passes through the core; nothing passes around it.</figcaption>
     </figure>
