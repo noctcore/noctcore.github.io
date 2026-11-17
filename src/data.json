@@ -2,39 +2,6 @@
   "checked": "2026-11-17",
   "apps": [
     {
-      "name": "Nightcore",
-      "repo": "https://github.com/noctcore/nightcore",
-      "what": "A local-first desktop studio that runs Claude as an autonomous development team.",
-      "body": "Describe work as cards on a board. Agents plan, build and test in parallel, each in its own git worktree, and nothing merges on trust: every change passes build, lint, typecheck, the project's own structure rules and an independent reviewer agent before it can reach your branch. Codex is an optional second provider.",
-      "status": "Maintenance mode since v0.5.0",
-      "statusNote": "Dependency and security updates and fixes to what exists, no new features.",
-      "state": "maintenance",
-      "facts": [
-        [
-          "Latest",
-          "v0.5.0, 2 October 2026"
-        ],
-        [
-          "Get it",
-          "Installers for macOS (.dmg) and Windows (.exe, .msi)"
-        ],
-        [
-          "Built on",
-          "Rust and Tauri, over a Bun provider sidecar"
-        ]
-      ],
-      "links": [
-        [
-          "Download v0.5.0",
-          "https://github.com/noctcore/nightcore/releases/latest"
-        ],
-        [
-          "Repository",
-          "https://github.com/noctcore/nightcore"
-        ]
-      ]
-    },
-    {
       "name": "Nysia",
       "repo": "https://github.com/noctcore/nysia",
       "what": "A terminal-first agentic development environment.",
@@ -64,6 +31,39 @@
         [
           "Build from source",
           "https://github.com/noctcore/nysia#development"
+        ]
+      ]
+    },
+    {
+      "name": "Nightcore",
+      "repo": "https://github.com/noctcore/nightcore",
+      "what": "A local-first desktop studio that runs Claude as an autonomous development team.",
+      "body": "Describe work as cards on a board. Agents plan, build and test in parallel, each in its own git worktree, and nothing merges on trust: every change passes build, lint, typecheck, the project's own structure rules and an independent reviewer agent before it can reach your branch. Codex is an optional second provider.",
+      "status": "Maintenance mode since v0.5.0",
+      "statusNote": "Dependency and security updates and fixes to what exists, no new features.",
+      "state": "maintenance",
+      "facts": [
+        [
+          "Latest",
+          "v0.5.0, 2 October 2026"
+        ],
+        [
+          "Get it",
+          "Installers for macOS (.dmg) and Windows (.exe, .msi)"
+        ],
+        [
+          "Built on",
+          "Rust and Tauri, over a Bun provider sidecar"
+        ]
+      ],
+      "links": [
+        [
+          "Download v0.5.0",
+          "https://github.com/noctcore/nightcore/releases/latest"
+        ],
+        [
+          "Repository",
+          "https://github.com/noctcore/nightcore"
         ]
       ]
     }

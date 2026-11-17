@@ -22,7 +22,7 @@ function sheetSvg(sheet, variant) {
   const body =
     sheet.form === 'ledger'
       ? ledger(sheet.rows, narrow ? { name: 42, detail: 30, verdict: 30, footer: 30, stacked: true } : {})
-      : passage(sheet.diagram, sheet.mark, narrow ? { label: 40, name: 46, end: 32, rowGap: 60, pairTop: 50 } : { label: 28, name: 32, end: 24 });
+      : passage(sheet.diagram, sheet.mark, narrow ? { label: 40, name: 46, end: 38, rowGap: 60, pairTop: 50 } : { label: 23, name: 28, end: 21 });
   const box = narrow ? (sheet.form === 'ledger' ? '0 30 1040 1000' : '0 20 1040 640') : (sheet.form === 'ledger' ? '0 0 1040 640' : '0 24 1040 600');
   return `<svg class="draw draw-${variant}" viewBox="${box}" role="img" aria-labelledby="t-${sheet.id}-${variant}"><title id="t-${sheet.id}-${variant}">${esc(sheet.alt)}</title>${body}</svg>`;
 }
@@ -43,7 +43,7 @@ function sheetMeta(sheet, i) {
       <div class="meta">
         <dl class="titleblock">
           <div><dt>Sheet</dt><dd>${String(i + 1).padStart(2, '0')} of ${String(sheets.length).padStart(2, '0')}</dd></div>
-          <div><dt>Form</dt><dd>${sheet.form}</dd></div>
+          <div><dt>Route</dt><dd>${esc(sheet.form === 'ledger' ? 'manifest to exit code' : `${sheet.diagram.start} to ${sheet.diagram.end}`)}</dd></div>
           <div class="tb-wide"><dt>Subject</dt><dd>${esc(sheet.subject)}</dd></div>
         </dl>
         <h3 class="sheet-title">${esc(sheet.title)}</h3>
@@ -217,6 +217,8 @@ ${inline ? `<style>${css}</style>` : `<link rel="stylesheet" href="${css}">`}
       <p class="sub">Agents write the code. Every change still passes a gate.</p>
       <p class="lead">noctcore is a small family of open source developer tools for working with coding agents: two desktop apps and ${total} npm packages. Agents write most of the code; the structure, the review gates and the safety rules stay in human hands, on your machine, in files you can read.</p>
       <p class="cta"><a class="btn btn-solid" href="#libraries">Browse the libraries</a><a class="btn" href="#gates">Follow a change</a></p>
+      <div class="cmd cmd-hero"><span class="cmd-p" aria-hidden="true">$</span><code>npx @noctcore/harness check</code><button class="copy" type="button" data-copy="npx @noctcore/harness check" aria-label="Copy: npx @noctcore/harness check">Copy</button></div>
+      <p class="cmd-note">Run a repo's own checks in any CI. Zero runtime dependencies, no network, no account.</p>
     </div>
     <figure class="hero-mark" aria-label="The noctcore mark drawn as a dimensioned plan: a 64 unit canvas on a 4 unit grid, 8 unit strokes, closed above and below and open at the core, with one route passing straight through the core.">
       <svg viewBox="0 6 660 600" role="img" aria-hidden="true">${markDrawing()}</svg>
@@ -249,16 +251,16 @@ ${inline ? `<style>${css}</style>` : `<link rel="stylesheet" href="${css}">`}
     <div class="why-claim">
       <p class="eyebrow">Why it exists</p>
       <h2 id="why-h">Agents can write most of the code. They should not decide what ships.</h2>
-    </div>
-    <div class="why-body">
-      <p>Coding agents are quick and tireless, and they optimise for done. Left alone they will skip the failing test, import across a layer or leave a secret where a CI job can read it. A rule that lives in a prompt is a suggestion.</p>
-      <p>noctcore builds the other half: the rules a repo commits, the checks that run them, and the gates a change has to pass before it lands. The gates are enforced, not requested, and a check that could not run counts as a failure, never a pass.</p>
-      <p>The tools are local-first and legible. There is no noctcore server and no account; the apps run on your machine and the libraries are small enough to read, with each rule naming the mistake it exists for.</p>
       <dl class="hands">
         <div><dt>Structure</dt><dd>The project's own rules, committed: lint plugins, lint-meta registries, structure locks.</dd></div>
         <div><dt>Review</dt><dd>An independent reviewer and a merge you approve, never a merge on trust.</dd></div>
         <div><dt>Safety</dt><dd>Security rules in the linter, pinned workflow linters, auth defaults written down with their reasons.</dd></div>
       </dl>
+    </div>
+    <div class="why-body">
+      <p>Coding agents are quick and tireless, and they optimise for done. Left alone they will skip the failing test, import across a layer or leave a secret where a CI job can read it. A rule that lives in a prompt is a suggestion.</p>
+      <p>noctcore builds the other half: the rules a repo commits, the checks that run them, and the gates a change has to pass before it lands. The gates are enforced, not requested, and a check that could not run counts as a failure, never a pass.</p>
+      <p>The tools are local-first and legible. There is no noctcore server and no account; the apps run on your machine and the libraries are small enough to read, with each rule naming the mistake it exists for.</p>
     </div>
   </div>
 </section>
