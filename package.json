@@ -1,0 +1,11 @@
+{
+  "name": "noctcore-site",
+  "private": true,
+  "type": "module",
+  "description": "The noctcore organization site at https://noctcore.github.io/",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  }
+}
