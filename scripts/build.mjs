@@ -237,6 +237,7 @@ ${inline ? `<style>${css}</style>` : `<link rel="stylesheet" href="${css}">`}
     <p class="eyebrow">The drawing set / ${sheets.length} sheets</p>
     <h2 id="gates-h">Follow one change through the gates.</h2>
     <p>Each sheet is drawn from a flow the code really runs, in its real order. Steps are named as the README names them; copper marks what a step stops, as an example of the class it addresses, not a promise to catch every case.</p>
+    <p class="hint"><span class="hint-scrub">Scroll to turn the sheets, or pick one from the tabs.</span><span class="hint-tabs">Pick a sheet from the tabs.</span></p>
   </div></div>
   <div class="set" data-set>
     <div class="stage">
