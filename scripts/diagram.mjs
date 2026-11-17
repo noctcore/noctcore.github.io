@@ -82,7 +82,7 @@ const text = (value, x, y, cls, size) =>
  * The passage. `scale` sets the lettering: the wide form uses the generator's
  * sizes, the narrow form enlarges them so a 390 px screen still reads them.
  */
-export function passage(spec, markName, { label = 32, name = 36, end = 26, rowGap = 45, gateId = '' } = {}) {
+export function passage(spec, markName, { label = 32, name = 36, end = 26, rowGap = 45, pairTop = null } = {}) {
   const rects = marks[markName];
   const { gates, start } = spec;
   const x0 = 76, y0 = 501, x1 = 950, y1 = 161;
@@ -127,7 +127,7 @@ export function passage(spec, markName, { label = 32, name = 36, end = 26, rowGa
     const widest = Math.max(...widths);
     const side = x - 76 - 18 - widest >= 0 ? -1 : 1;
     const jx = x + side * 76;
-    const firstY = Math.max(56 + (gates.length - 1 - index) * rowGap, capY - 270);
+    const firstY = pairTop == null ? Math.max(56 + (gates.length - 1 - index) * rowGap, capY - 270) : Math.max(pairTop, capY - 300);
     const ys = [firstY, firstY + label * 1.44];
     let join = '';
     let lettering = '';
@@ -174,38 +174,45 @@ export function passage(spec, markName, { label = 32, name = 36, end = 26, rowGa
  * ending in a verdict. Passing tracks land on a core square; stopped ones are
  * dashed copper and end in a cap.
  */
-export function ledger(rows, { name = 30, detail = 22, verdict = 22, footer = 21 } = {}) {
+export function ledger(rows, { name = 30, detail = 22, verdict = 22, footer = 21, stacked = false } = {}) {
+  // Wide: name and track share a row. Stacked (narrow screens): the track
+  // runs under the name across the full width, so the lettering can be larger.
   const spine = 62;
   const top = 92;
-  const gap = 104;
-  const t0 = 640;
+  const gap = stacked ? 176 : 104;
+  const t0 = stacked ? spine + 66 : 640;
   const t1 = 980;
+  const trackDy = stacked ? detail + 52 : 0;
   let out = `<g class="d-bed"><path class="s-line" fill="none" d="M${spine} ${top - 26}V${top + gap * (rows.length - 1) + 40}"/></g>`;
-  out += text('.noctcore/harness.json', spine + 26, top - 40, 't-end', 22);
+  out += text('.noctcore/harness.json', spine + 26, top - 40, 't-end', stacked ? 28 : 22);
   rows.forEach((row, i) => {
     const y = top + i * gap + 30;
+    const ty = y + trackDy;
     const passed = row.verdict === 'passed';
     out += `<g class="d-name" data-gate="${i}" style="--i:${i}">`;
     out += `<rect class="${passed ? 'f-acc' : 'f-bg s-stop-solid'}" x="${spine - 7}" y="${y - 7}" width="14" height="14"/>`;
     out += `<path class="s-line" fill="none" d="M${spine + 7} ${y}h14"/>`;
-    out += text(String(i + 1).padStart(2, '0'), spine + 30, y - 10, 't-num', 18);
-    out += text(row.name, spine + 66, y - 4, 't-name', name);
-    out += text(row.detail, spine + 66, y + 30, 't-detail', detail);
+    out += text(String(i + 1).padStart(2, '0'), spine + 30, y - 10, 't-num', stacked ? 22 : 18);
+    out += text(row.name, spine + 66, y - 4 + (stacked ? 6 : 0), 't-name', name);
+    out += text(row.detail, spine + 66, y + 30 + (stacked ? 10 : 0), 't-detail', detail);
     out += `</g>`;
+    const vy = ty + verdict + 20;
     if (passed) {
-      out += `<g class="d-block" data-gate="${i}" style="--i:${i}"><path class="s-route" pathLength="1" d="M${t0} ${y}H${t1 - 16}"/>`;
-      for (const x of [t0 + 70, t0 + 170, t0 + 270]) out += tick(x, y, 0);
-      out += `<rect class="f-acc" x="${t1 - 16}" y="${y - 10}" width="20" height="20"/>`;
-      out += text('passed', t1 + 4 - mono('passed', verdict), y + 42, 't-acc', verdict);
+      out += `<g class="d-block" data-gate="${i}" style="--i:${i}"><path class="s-route" d="M${t0} ${ty}H${t1 - 16}"/>`;
+      const span = t1 - 16 - t0;
+      for (const f of [0.2, 0.5, 0.8]) out += tick(t0 + span * f, ty, 0);
+      out += `<rect class="f-acc" x="${t1 - 16}" y="${ty - 10}" width="20" height="20"/>`;
+      out += text('passed', t1 + 4 - mono('passed', verdict), vy, 't-acc', verdict);
       out += `</g>`;
     } else {
-      const endX = row.verdict === 'failed' ? t0 + 210 : t0 + 120;
-      out += `<g class="d-branch" data-gate="${i}" style="--i:${i}"><path class="s-stop-dash" d="M${t0} ${y}H${endX}"/>`;
-      out += `<path class="s-stop-cap" d="M${endX} ${y - 12}v24"/><circle class="f-stop" cx="${endX}" cy="${y}" r="3.5"/></g>`;
-      out += `<g class="d-label" data-gate="${i}" style="--i:${i}">${text(row.verdict, t1 + 4 - mono(row.verdict, verdict), y + 8, 't-stop', verdict)}</g>`;
+      // A failed check ran part of the way; a blocked one stopped before it could run.
+      const endX = t0 + (t1 - t0) * (row.verdict === 'failed' ? 0.62 : 0.34);
+      out += `<g class="d-branch" data-gate="${i}" style="--i:${i}"><path class="s-stop-dash" d="M${t0} ${ty}H${r(endX)}"/>`;
+      out += `<path class="s-stop-cap" d="M${r(endX)} ${ty - 12}v24"/><circle class="f-stop" cx="${r(endX)}" cy="${ty}" r="3.5"/></g>`;
+      out += `<g class="d-label" data-gate="${i}" style="--i:${i}">${text(row.verdict, t1 + 4 - mono(row.verdict, verdict), vy, 't-stop', verdict)}</g>`;
     }
   });
-  const fy = top + gap * rows.length + 14;
+  const fy = top + gap * (rows.length - 1) + 30 + trackDy + verdict + (stacked ? 76 : 54);
   out += `<g class="d-ends"><rect class="f-stop" x="${spine - 8}" y="${fy - 12}" width="16" height="16"/>`;
   out += text('exit 1: every check ran, both stops are listed', spine + 26, fy + 2, 't-stop', footer);
   out += `</g>`;
@@ -250,7 +257,7 @@ export function markDrawing() {
   // Core, 8 units, under the drawing.
   const cy = P(64) + 30;
   out += dim(P(28), cy, P(36), cy) + capH(P(28), cy) + capH(P(36), cy);
-  out += `<path class="s-dim-lead" d="M${P(28)} ${P(36)}V${cy + 6}M${P(36)} ${P(36)}V${cy + 6}"/>`;
+  out += `<path class="s-dim-lead" d="M${P(28)} ${P(52) + 26}V${cy + 6}M${P(36)} ${P(52) + 26}V${cy + 6}"/>`;
   out += text('8u core', P(28) - 8, cy + 28, 't-dim', 15);
   // Canvas, 64 units, above.
   const ty = -24;
