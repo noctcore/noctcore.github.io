@@ -22,7 +22,7 @@ function sheetSvg(sheet, variant) {
   const body =
     sheet.form === 'ledger'
       ? ledger(sheet.rows, narrow ? { name: 42, detail: 30, verdict: 30, footer: 30, stacked: true } : {})
-      : passage(sheet.diagram, sheet.mark, narrow ? { label: 40, name: 46, end: 38, rowGap: 60, pairTop: 50 } : { label: 23, name: 28, end: 21 });
+      : passage(sheet.diagram, sheet.mark, narrow ? { label: 40, name: 46, end: 38, rowGap: 60, pairTop: 50 } : { label: 23, name: 27, end: 21 });
   const box = narrow ? (sheet.form === 'ledger' ? '0 30 1040 1000' : '0 20 1040 640') : (sheet.form === 'ledger' ? '0 0 1040 640' : '0 24 1040 600');
   return `<svg class="draw draw-${variant}" viewBox="${box}" role="img" aria-labelledby="t-${sheet.id}-${variant}"><title id="t-${sheet.id}-${variant}">${esc(sheet.alt)}</title>${body}</svg>`;
 }
@@ -282,6 +282,7 @@ ${inline ? `<style>${css}</style>` : `<link rel="stylesheet" href="${css}">`}
       <h2 id="libs-h">The index.</h2>
       <p>Every package is MIT licensed and published to npm under <code>@noctcore</code> with provenance, through npm trusted publishing. Versions as of ${esc(new Date(data.checked).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }))}.</p>
     </div>
+    <nav class="jump" aria-label="Jump to a family">${data.families.map((f) => `<a href="#lib-${f.id}">${flatMark(f.mark, 14)}<span>${esc(f.name)}</span><span class="jump-n">${f.packages.length}</span></a>`).join('')}</nav>
     <p class="legend" aria-label="Status key">${[['shipped', 'shipped'], ['active', 'active development'], ['preview', 'preview'], ['maintenance', 'maintenance']].map(([s, l]) => `<span class="item">${stateGlyph(s)}${l}</span>`).join('')}</p>
     <div class="families">${families}</div>
   </div>
@@ -293,12 +294,15 @@ ${inline ? `<style>${css}</style>` : `<link rel="stylesheet" href="${css}">`}
       <p class="eyebrow">Principles</p>
       <h2 id="pr-h">What every tool keeps to.</h2>
     </div>
+    <div class="notes">
+    <p class="notes-head"><span>General notes</span><span>Apply to every sheet</span></p>
     <ol class="pr-list">
       <li><span class="pr-n">01</span><h3>Local-first</h3><p>The tools run where your code already is. There is no noctcore server to send it to and no account to create.</p><p class="pr-proof"><span>Where it holds</span>Nightcore keeps per-project state in the project's <code>.nightcore/</code>; harness makes no network call.</p></li>
       <li><span class="pr-n">02</span><h3>Legible</h3><p>You can always see what a tool did and why. Commands are printed, rules name their mistake.</p><p class="pr-proof"><span>Where it holds</span>harness prints every command before it runs; each auth module opens with the attack it exists for.</p></li>
       <li><span class="pr-n">03</span><h3>Governed</h3><p>Agents move fast inside rules you define, not around them. Gates are enforced state, not advice.</p><p class="pr-proof"><span>Where it holds</span>Nightcore's gates are machine-enforced transitions; a harness check that could not run fails.</p></li>
-      <li><span class="pr-n">04</span><h3>Zero runtime dependencies, where it can be done</h3><p>Fewer things to trust, audit and pin.</p><p class="pr-proof"><span>Where it holds</span><code>@noctcore/harness</code> and the <code>@noctcore/auth</code> core install with no runtime dependencies.</p></li>
+      <li><span class="pr-n">04</span><h3>Zero runtime dependencies</h3><p>Where it can be done. Fewer things to trust, audit and pin.</p><p class="pr-proof"><span>Where it holds</span><code>@noctcore/harness</code> and the <code>@noctcore/auth</code> core install with no runtime dependencies.</p></li>
     </ol>
+    </div>
   </div>
 </section>
 </main>
