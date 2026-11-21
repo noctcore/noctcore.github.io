@@ -125,7 +125,7 @@ const families = data.families
 /* ---------- head ---------- */
 const title = 'noctcore: governed autonomy for software teams';
 const description =
-  'noctcore builds local-first, open source tools for working with coding agents: two desktop apps and 24 npm packages for lint rules, repo checks, authentication and showcase images. Agents write the code; structure, review gates and safety stay in human hands.';
+  `noctcore builds local-first, open source tools for working with coding agents: two desktop apps and ${total} npm packages for lint rules, repo checks, authentication, background jobs and showcase images. Agents write the code; structure, review gates and safety stay in human hands.`;
 
 const jsonld = {
   '@context': 'https://schema.org',
@@ -185,7 +185,7 @@ ${icon.apple ? `<link rel="apple-touch-icon" href="${icon.apple}">` : ''}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="noctcore">
 <meta property="og:title" content="noctcore. Autonomy, governed.">
-<meta property="og:description" content="Agents write the code. Every change still passes a gate. Local-first, open source tools: two apps and 24 npm packages.">
+<meta property="og:description" content="Agents write the code. Every change still passes a gate. Local-first, open source tools: two apps and ${total} npm packages.">
 <meta property="og:url" content="${SITE}">
 <meta property="og:image" content="${og}">
 <meta property="og:image:width" content="1280">
@@ -328,10 +328,10 @@ ${inline ? `<style>${css}</style>` : `<link rel="stylesheet" href="${css}">`}
       <p>Autonomy, governed.</p>
     </div>
     <nav class="foot-col" aria-label="Projects"><h2>Projects</h2>
-      ${['nightcore', 'nysia', 'auth', 'harness', 'eslint-plugins', 'showcase-kit'].map((r) => ext(`https://github.com/noctcore/${r}`, r)).join('')}
+      ${['nightcore', 'nysia', 'auth', 'harness', 'eslint-plugins', 'showcase-kit', 'jobs'].map((r) => ext(`https://github.com/noctcore/${r}`, r)).join('')}
     </nav>
     <nav class="foot-col" aria-label="Docs"><h2>Docs</h2>
-      ${ext('https://noctcore.github.io/auth/', 'auth')}${ext('https://noctcore.github.io/harness/', 'harness')}${ext('https://noctcore.github.io/eslint-plugins/', 'eslint-plugins')}${ext('https://noctcore.github.io/showcase-kit/', 'showcase-kit')}
+      ${ext('https://noctcore.github.io/auth/', 'auth')}${ext('https://noctcore.github.io/harness/', 'harness')}${ext('https://noctcore.github.io/eslint-plugins/', 'eslint-plugins')}${ext('https://noctcore.github.io/showcase-kit/', 'showcase-kit')}${ext('https://noctcore.github.io/jobs/', 'jobs')}
     </nav>
     <nav class="foot-col" aria-label="Elsewhere"><h2>Elsewhere</h2>
       ${ext('https://github.com/noctcore', 'GitHub')}${ext('https://www.npmjs.com/org/noctcore', 'npm')}${ext('mailto:support@shirone.dev', 'support@shirone.dev')}

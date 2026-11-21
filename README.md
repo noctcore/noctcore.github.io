@@ -27,7 +27,7 @@ This writes the site to `dist/` and a single self-contained `preview.html` you c
 | Path | What it holds |
 | --- | --- |
 | `src/data.json` | Apps, package families, versions and links. Change facts here. |
-| `scripts/sheets.mjs` | The five drawing sheets: route, steps and what each step stops. |
+| `scripts/sheets.mjs` | The six drawing sheets: route, steps and what each step stops. |
 | `scripts/diagram.mjs` | The marks and the drawing forms (passage, ledger, the hero plan). |
 | `scripts/build.mjs` | The page template and the build into `dist/`. |
 | `src/site.css`, `src/site.js` | Styles for both themes, and the theme switch, copy buttons and sheet controls. |
