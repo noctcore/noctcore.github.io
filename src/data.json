@@ -1,5 +1,5 @@
 {
-  "checked": "2026-11-17",
+  "checked": "2026-11-21",
   "apps": [
     {
       "name": "Nysia",
@@ -290,6 +290,34 @@
           "showcase-kit",
           "0.3.1",
           "The showcase CLI: raw captures, framed README images, portfolio images, hero banners, terminal clips and app icons."
+        ]
+      ]
+    },
+    {
+      "id": "jobs",
+      "mark": "jobs",
+      "name": "jobs",
+      "promise": "Jobs without the traps.",
+      "what": "BullMQ 6 for NestJS with the safe choice made the default: typed queues with required retry and retention policies, a dedupe on every enqueue and producers that fail fast during a Redis outage. Sweeps run once per tick, and shutdown waits for running jobs.",
+      "status": "0.1.0 on npm, pre-1.0: pin an exact version",
+      "state": "shipped",
+      "install": "npm i @noctcore/jobs bullmq ioredis",
+      "links": [
+        [
+          "Docs",
+          "https://noctcore.github.io/jobs/"
+        ],
+        [
+          "Repository",
+          "https://github.com/noctcore/jobs"
+        ]
+      ],
+      "note": "Needs NestJS 11 or 12, BullMQ 6 and Redis with maxmemory-policy noeviction.",
+      "packages": [
+        [
+          "jobs",
+          "0.1.0",
+          "defineQueue, queue.add with a required dedupe, @Worker on JobHost, @Sweep, graceful shutdown and telemetry adapters."
         ]
       ]
     }

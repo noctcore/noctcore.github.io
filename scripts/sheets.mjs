@@ -120,4 +120,30 @@ export const sheets = [
       ['export', null, 'WebP or PNG, README snippet', 'hero banners, clips, icons', 'https://noctcore.github.io/showcase-kit/'],
     ],
   },
+  {
+    id: 'jobs',
+    tab: 'Background jobs',
+    subject: 'noctcore/jobs',
+    mark: 'jobs',
+    form: 'passage',
+    title: 'Jobs without the traps.',
+    lead: 'One add() on its way to a completed job. Every add picks a dedupe and every retry backs off; the worker is a plain class.',
+    alt: 'add() passes the producer, the dedupe and the queue policy to a JobHost worker and ends completed. A hung request stops at the producer, a duplicate job at the dedupe and a retry storm at the policy.',
+    diagram: {
+      start: 'add()',
+      end: 'completed',
+      gates: [
+        { name: 'producer', stops: ['hung request'] },
+        { name: 'dedupe', stops: ['duplicate job'] },
+        { name: 'policy', stops: ['retry storm'] },
+        { name: 'JobHost' },
+      ],
+    },
+    detail: [
+      ['producer', 'hung request', 'producer connection', 'no offline queue, one retry, a 3 s bound', 'https://noctcore.github.io/jobs/guides/connections/'],
+      ['dedupe', 'duplicate job', 'queue.add', 'a required dedupe, held in its own Redis key', 'https://noctcore.github.io/jobs/guides/dedupe/'],
+      ['policy', 'retry storm', 'defineQueue', 'expo() or fixed(), jittered by default', 'https://noctcore.github.io/jobs/guides/queues-and-policies/'],
+      ['JobHost', null, '@Worker(queue)', 'onFinalFailure once, on the attempt that ends the job', 'https://noctcore.github.io/jobs/guides/workers/'],
+    ],
+  },
 ];
